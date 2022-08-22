@@ -7,55 +7,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using MySqlConnector;
-public enum StageNum
-{
-	ONE,
-	TWO,
-	THREE,
-	FOUR
-}
 
-public struct Enchant_AdminData
-{
-	public string userId;
-	public string action;
-	public string seedName;
-	public int price;
-	public int hopePrice;
-
-	public void Reset()
-	{
-		userId = "";
-		action = "";
-		seedName = "";
-		price = 0;
-		hopePrice = 0;
-	}
-
-	//EnchantGame SeedInfoSet
-	public void Set(string id, string action, string seedName, int price, int hopePrice)
-	{
-		userId = id;
-		this.action = action;
-		switch (seedName)
-		{
-			case "FlowerSeed":
-				this.seedName = "A";
-				break;
-			case "AppleSeed":
-				this.seedName = "B";
-				break;
-			case "RandomSeed":
-				this.seedName = "C";
-				break;
-			default:
-				this.seedName = seedName;
-				break;
-		}
-		this.price = price;
-		this.hopePrice = hopePrice;
-	}
-}
 public static class DBManager
 {
 	public static string username;
@@ -63,17 +15,8 @@ public static class DBManager
 	public static int gp;
 	public static int score;
 	public static string data;
-	public static StageNum stageNum = StageNum.ONE;
-	public static bool isPlant;
-	public static string seedName;
-	public static int seedTempletNum;
-	public static int seedEnhance;
-	public static int randomSeedCost;
-	public static Enchant_AdminData adminData;
 	public static string gameVersion;
-	public static string sqlConnect = "server=pickstar.co.kr;uid=pickstar;pwd=xktmvlr10;database=pickstar;charset=utf8;TlsVersion=Tlsv1.2";
-	//public static string sqlConnect = "server=localhost;uid=root;pwd=root;database=battleserverdb;charset=utf8;TlsVersion=Tlsv1.2;";
-	//public static string sqlConnect = "server=172.30.1.19;uid=konggames;pwd=konggames2022!;database=battleserverdb;charset=utf8;TlsVersion=Tlsv1.2;";
+	public static string sqlConnect = "server=server;uid=id;pwd=password;database=database;charset=utf8;TlsVersion=Tlsv1.2";
 	public static bool LoggedIn { get { return username != null; } }
 	
 	public static bool Login(in string id_input,in string password_input, out string alarmMessage)
@@ -81,7 +24,6 @@ public static class DBManager
 		string id = id_input;
 		string password = password_input;
 		//string passwordHash = passwordEncryption(id + password);
-		//string sqlConnect = "server=localhost;uid=root;pwd=root;database=battleserverdb;charset=utf8;TlsVersion=Tlsv1.2;";
 
 		MySqlConnection conn = new MySqlConnection(sqlConnect);
 		if (conn.State != System.Data.ConnectionState.Closed)
@@ -193,9 +135,6 @@ public static class DBManager
 		{
 			return true;
 		}
-
-		//string sqlConnect = "server=pickstar.co.kr;uid=pickstar;pwd=xktmvlr10;database=pickstar;charset=utf8;";
-		//string sqlConnect = "server=localhost;uid=root;pwd=root;database=battleserverdb;charset=utf8;TlsVersion=Tlsv1.2;";
 		MySqlConnection conn = new MySqlConnection(sqlConnect);
 		if (conn.State != System.Data.ConnectionState.Closed)
 		{
@@ -220,8 +159,6 @@ public static class DBManager
 	public static void LoadGP()
 	{
 		string id = username;
-		//string sqlConnect = "server=pickstar.co.kr;uid=pickstar;pwd=xktmvlr10;database=pickstar;charset=utf8;";
-		//string sqlConnect = "server=localhost;uid=root;pwd=root;database=battleserverdb;charset=utf8;TlsVersion=Tlsv1.2;";
 		MySqlConnection conn = new MySqlConnection(sqlConnect);
 		if (conn.State != System.Data.ConnectionState.Closed)
 		{
@@ -265,7 +202,6 @@ public static class DBManager
 
 	public static bool GameVersionCheck()
 	{
-		//string sqlConnect = "server=pickstar.co.kr;uid=pickstar;pwd=xktmvlr10;database=pickstar;charset=utf8;";
 		string tempVersion;
 		MySqlConnection conn = new MySqlConnection(sqlConnect);
 		if (conn.State != System.Data.ConnectionState.Closed)
